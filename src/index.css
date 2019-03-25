@@ -17,6 +17,7 @@ body {
 }
 
 .note {
+  position: relative;
   width: 240px;
   height: auto;
   float: left;
