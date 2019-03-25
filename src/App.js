@@ -4,12 +4,34 @@ import NotesGrid from "./components/NotesGrid";
 
 class App extends Component {
   state = {
-    notes: [{ id: 1, color: "yellow", text: "first note" }]
+    notes: []
   };
 
+  componentDidMount() {
+    try {
+      const savedNotes = JSON.parse(localStorage.getItem("notes"));
+
+      if (savedNotes) {
+        this.setState({ notes: savedNotes });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   handleNoteAdd = (newNote) => {
-    this.setState({ notes: [newNote, ...this.state.notes] });
+    this.setState({ notes: [newNote, ...this.state.notes] }, this.saveToLocalStorage);
   };
+
+  saveToLocalStorage() {
+    try {
+      const notes = JSON.stringify(this.state.notes);
+
+      localStorage.setItem("notes", notes);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   render() {
     return (
