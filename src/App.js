@@ -1,25 +1,22 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import NoteEditor from "./components/NoteEditor";
+import NotesGrid from "./components/NotesGrid";
 
 class App extends Component {
+  state = {
+    notes: [{ id: 1, color: "yellow", text: "first note" }]
+  };
+
+  handleNoteAdd = (newNote) => {
+    this.setState({ notes: [newNote, ...this.state.notes] });
+  };
+
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      <div className="app">
+        <h1 className="app__header">Notes App</h1>
+        <NoteEditor onNoteAdd={this.handleNoteAdd} />
+        <NotesGrid notes={this.state.notes} />
       </div>
     );
   }
