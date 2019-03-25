@@ -19,15 +19,18 @@ class App extends Component {
     }
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.notes !== this.state.notes) {
+      this.saveToLocalStorage();
+    }
+  }
+
   handleNoteAdd = (newNote) => {
-    this.setState({ notes: [newNote, ...this.state.notes] }, this.saveToLocalStorage);
+    this.setState({ notes: [newNote, ...this.state.notes] });
   };
 
   handleNoteDelete = (noteId) => () => {
-    this.setState(
-      { notes: this.state.notes.filter((note) => note.id !== noteId) },
-      this.saveToLocalStorage
-    );
+    this.setState({ notes: this.state.notes.filter((note) => note.id !== noteId) });
   };
 
   saveToLocalStorage() {
